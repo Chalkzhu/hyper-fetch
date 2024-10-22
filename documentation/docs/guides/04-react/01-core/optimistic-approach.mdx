@@ -17,7 +17,7 @@ the example, when removing a user, he is removed from the list immediately after
 function UserTableRow({ user }) {
   const [isDeleted, setDeleted] = useState(false);
 
-  const { submit, onSubmitRequestStart, onSubmitError, onSubmitSuccess, revalidate } = useSubmit(
+  const { submit, onSubmitRequestStart, onSubmitError, onSubmitSuccess, refetch } = useSubmit(
     deleteUser.setParams({ userId: user.id }),
   );
 
@@ -32,8 +32,8 @@ function UserTableRow({ user }) {
   });
 
   onSubmitSuccess(() => {
-    // When it's successful, just revalidate users list to pull new page data
-    revalidate(new RegExp("/users"));
+    // When it's successful, just refetch users list to pull new page data
+    refetch(new RegExp("/users"));
   });
 
   if (isDeleted) {
